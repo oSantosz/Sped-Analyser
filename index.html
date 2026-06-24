@@ -21,20 +21,20 @@
 
 <aside>
 
-<h2>⚡ SPED</h2>
+<h2>Analisa SPED</h2>
 
 
 <nav>
 
-<button onclick="aba('dashboard')">📊 Dashboard</button>
+<button onclick="aba('dashboard')">Dashboard</button>
 
-<button onclick="aba('empresa')">🏢 Empresa</button>
+<button onclick="aba('empresa')">Empresa</button>
 
-<button onclick="aba('notas')">🧾 Notas</button>
+<button onclick="aba('notas')">Notas</button>
 
-<button onclick="aba('produtos')">📦 Produtos</button>
+<button onclick="aba('produtos')">Produtos</button>
 
-<button onclick="aba('auditoria')">⚠ Auditoria</button>
+<button onclick="aba('auditoria')">Auditoria</button>
 
 </nav>
 
@@ -43,10 +43,12 @@
 
 
 
+
 <main>
 
 
 <header>
+
 
 <h1>SPED Analyzer</h1>
 
@@ -60,11 +62,8 @@ accept=".txt">
 
 
 <button onclick="consultar()">
-
-🚀 Analisar SPED
-
+Consultar
 </button>
-
 
 </div>
 
@@ -81,74 +80,45 @@ accept=".txt">
 
 
 <div class="card">
-
 <h3>Notas</h3>
-
 <strong id="qtdNotas">0</strong>
-
 </div>
 
 
-
 <div class="card">
-
 <h3>Produtos</h3>
-
 <strong id="qtdProdutos">0</strong>
-
 </div>
 
 
-
-
 <div class="card">
-
 <h3>Participantes</h3>
-
 <strong id="qtdPart">0</strong>
-
 </div>
-
 
 
 <div class="card">
-
 <h3>Total</h3>
-
-<strong id="valorTotal">
-
-R$ 0
-
-</strong>
-
+<strong id="valorTotal">R$ 0</strong>
 </div>
 
 
-
 </div>
-
-
 
 
 
 <div class="panel">
 
-
 <h2>Resumo Fiscal</h2>
 
-
 <div id="resumo">
-
 Nenhum SPED carregado
-
 </div>
-
 
 </div>
 
 
 </section>
-
 
 
 
@@ -161,17 +131,12 @@ Nenhum SPED carregado
 
 <h2>Empresa</h2>
 
-
 <div id="dadosEmpresa"></div>
-
 
 </div>
 
 
 </section>
-
-
-
 
 
 
@@ -186,149 +151,38 @@ Nenhum SPED carregado
 <h2>Notas Fiscais</h2>
 
 
+<input 
+placeholder="Pesquisar NF"
+onkeyup="buscarNF(this.value)"
+>
+
 
 <table>
 
-
 <thead>
-
 
 <tr>
 
-
-<th>
-Número
-
-<br>
-
-<input 
-class="filtro"
-id="filtroNumero"
-placeholder="Filtrar"
-onkeyup="filtrarNotas()">
-
-</th>
-
-
-
-
-<th>
-
-Série
-
-<br>
-
-<input 
-class="filtro"
-id="filtroSerie"
-placeholder="Filtrar"
-onkeyup="filtrarNotas()">
-
-</th>
-
-
-
-
-<th>
-
-Modelo
-
-<br>
-
-<input 
-class="filtro"
-id="filtroModelo"
-placeholder="Filtrar"
-onkeyup="filtrarNotas()">
-
-</th>
-
-
-
-
-
-<th>
-
-Data
-
-<br>
-
-<input 
-class="filtro"
-id="filtroData"
-placeholder="Filtrar"
-onkeyup="filtrarNotas()">
-
-</th>
-
-
-
-
-
-<th>
-
-Valor
-
-<br>
-
-<input 
-class="filtro"
-id="filtroValor"
-placeholder="Filtrar"
-onkeyup="filtrarNotas()">
-
-</th>
-
-
-
-
-
-<th>
-
-Chave
-
-<br>
-
-<input 
-class="filtro"
-id="filtroChave"
-placeholder="Filtrar"
-onkeyup="filtrarNotas()">
-
-</th>
-
-
-
-<th>
-
-Ação
-
-</th>
-
+<th>Número</th>
+<th>Data</th>
+<th>Valor</th>
+<th></th>
 
 </tr>
 
-
 </thead>
-
 
 
 <tbody id="tabelaNotas"></tbody>
 
 
-
 </table>
-
 
 
 </div>
 
 
 </section>
-
-
-
-
 
 
 
@@ -344,16 +198,11 @@ Ação
 <h2>Produtos</h2>
 
 
-
-
 <table>
-
 
 <thead>
 
-
 <tr>
-
 
 <th>
 
@@ -361,14 +210,13 @@ Código
 
 <br>
 
-<input 
+<input
 class="filtro"
-id="filtroCodigo"
 placeholder="Filtrar"
-onkeyup="filtrarProdutos()">
+onkeyup="filtrarProdutos()"
+id="filtroCodigo">
 
 </th>
-
 
 
 
@@ -378,15 +226,13 @@ Descrição
 
 <br>
 
-<input 
+<input
 class="filtro"
-id="filtroDescricao"
 placeholder="Filtrar"
-onkeyup="filtrarProdutos()">
+onkeyup="filtrarProdutos()"
+id="filtroDescricao">
 
 </th>
-
-
 
 
 
@@ -396,15 +242,13 @@ Unidade
 
 <br>
 
-<input 
+<input
 class="filtro"
-id="filtroUnidade"
 placeholder="Filtrar"
-onkeyup="filtrarProdutos()">
+onkeyup="filtrarProdutos()"
+id="filtroUnidade">
 
 </th>
-
-
 
 
 
@@ -414,18 +258,15 @@ NCM
 
 <br>
 
-<input 
+<input
 class="filtro"
-id="filtroNcm"
 placeholder="Filtrar"
-onkeyup="filtrarProdutos()">
+onkeyup="filtrarProdutos()"
+id="filtroNcm">
 
 </th>
 
-
-
 </tr>
-
 
 </thead>
 
@@ -446,9 +287,6 @@ onkeyup="filtrarProdutos()">
 
 
 
-
-
-
 <section id="auditoria" class="page hidden">
 
 
@@ -457,11 +295,8 @@ onkeyup="filtrarProdutos()">
 
 <h2>Auditoria</h2>
 
-
 <div id="erros">
-
-Nenhuma análise realizada
-
+Nenhuma análise
 </div>
 
 
@@ -473,12 +308,10 @@ Nenhuma análise realizada
 
 
 
-
 </main>
 
 
 </div>
-
 
 
 
@@ -497,11 +330,8 @@ Nenhuma análise realizada
 
 <br>
 
-
 <button onclick="fechar()">
-
 Fechar
-
 </button>
 
 
@@ -512,12 +342,9 @@ Fechar
 
 
 
-
-
 <script src="app.js"></script>
 
 
 </body>
-
 
 </html>
