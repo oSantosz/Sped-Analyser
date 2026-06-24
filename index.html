@@ -21,22 +21,20 @@
 
 <aside>
 
-
-<h2>SPED</h2>
+<h2>⚡ SPED</h2>
 
 
 <nav>
 
-<button onclick="aba('dashboard')">Dashboard</button>
+<button onclick="aba('dashboard')">📊 Dashboard</button>
 
-<button onclick="aba('empresa')">Empresa</button>
+<button onclick="aba('empresa')">🏢 Empresa</button>
 
-<button onclick="aba('notas')">Notas</button>
+<button onclick="aba('notas')">🧾 Notas</button>
 
-<button onclick="aba('produtos')">Produtos</button>
+<button onclick="aba('produtos')">📦 Produtos</button>
 
 <button onclick="aba('auditoria')">⚠ Auditoria</button>
-
 
 </nav>
 
@@ -82,40 +80,26 @@ accept=".txt">
 
 
 <div class="card">
-
 <h3>Notas</h3>
-
 <strong id="qtdNotas">0</strong>
-
 </div>
 
 
 <div class="card">
-
 <h3>Produtos</h3>
-
 <strong id="qtdProdutos">0</strong>
-
 </div>
 
 
 <div class="card">
-
 <h3>Participantes</h3>
-
 <strong id="qtdPart">0</strong>
-
 </div>
 
 
 <div class="card">
-
-<h3>Valor Total</h3>
-
-<strong id="valorTotal">
-R$ 0
-</strong>
-
+<h3>Total</h3>
+<strong id="valorTotal">R$ 0</strong>
 </div>
 
 
@@ -127,9 +111,9 @@ R$ 0
 
 <h2>Resumo Fiscal</h2>
 
-<p id="resumo">
-Nenhum arquivo carregado
-</p>
+<div id="resumo">
+Nenhum SPED carregado
+</div>
 
 </div>
 
@@ -147,9 +131,7 @@ Nenhum arquivo carregado
 
 <h2>Empresa</h2>
 
-
 <div id="dadosEmpresa"></div>
-
 
 </div>
 
@@ -177,15 +159,14 @@ onkeyup="buscarNF(this.value)"
 
 <table>
 
-
 <thead>
 
 <tr>
 
-<th>NF</th>
+<th>Número</th>
 <th>Data</th>
 <th>Valor</th>
-<th>Ação</th>
+<th></th>
 
 </tr>
 
@@ -202,6 +183,7 @@ onkeyup="buscarNF(this.value)"
 
 
 </section>
+
 
 
 
@@ -224,6 +206,7 @@ onkeyup="buscarNF(this.value)"
 
 <th>Código</th>
 <th>Descrição</th>
+<th>Unidade</th>
 <th>NCM</th>
 
 </tr>
@@ -237,10 +220,11 @@ onkeyup="buscarNF(this.value)"
 </table>
 
 
-
 </div>
 
+
 </section>
+
 
 
 
@@ -252,13 +236,10 @@ onkeyup="buscarNF(this.value)"
 <div class="panel">
 
 
-<h2>Auditoria SPED</h2>
-
+<h2>Auditoria</h2>
 
 <div id="erros">
-
-Nenhuma análise realizada
-
+Nenhuma análise
 </div>
 
 
@@ -284,10 +265,13 @@ Nenhuma análise realizada
 <div class="modal-box">
 
 
-<h2>Detalhes</h2>
+<h2>Detalhes NF</h2>
+
 
 <div id="modalConteudo"></div>
 
+
+<br>
 
 <button onclick="fechar()">
 Fechar
@@ -302,6 +286,7 @@ Fechar
 
 
 <script src="app.js"></script>
+
 
 </body>
 
