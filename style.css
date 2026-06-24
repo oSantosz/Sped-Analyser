@@ -1,5 +1,7 @@
 *{
+
 box-sizing:border-box;
+
 }
 
 
@@ -16,6 +18,7 @@ color:white;
 }
 
 
+
 .layout{
 
 display:flex;
@@ -23,6 +26,7 @@ display:flex;
 height:100vh;
 
 }
+
 
 
 
@@ -46,6 +50,7 @@ color:#38bdf8;
 
 
 
+
 nav button{
 
 width:100%;
@@ -54,17 +59,19 @@ padding:14px;
 
 margin:8px 0;
 
+background:#1e293b;
+
 border:0;
 
 border-radius:10px;
-
-background:#1e293b;
 
 color:white;
 
 cursor:pointer;
 
 }
+
+
 
 
 
@@ -80,6 +87,7 @@ overflow:auto;
 
 
 
+
 header{
 
 display:flex;
@@ -89,6 +97,7 @@ justify-content:space-between;
 align-items:center;
 
 }
+
 
 
 
@@ -110,19 +119,22 @@ cursor:pointer;
 
 
 
+
 input{
 
-padding:12px;
+padding:10px;
 
 background:#020617;
 
-color:white;
-
 border:1px solid #334155;
+
+color:white;
 
 border-radius:8px;
 
 }
+
+
 
 
 
@@ -140,6 +152,7 @@ margin:25px 0;
 
 
 
+
 .card,.panel{
 
 background:#1e293b;
@@ -152,6 +165,7 @@ border-radius:18px;
 
 
 
+
 .card strong{
 
 font-size:32px;
@@ -159,6 +173,7 @@ font-size:32px;
 color:#38bdf8;
 
 }
+
 
 
 
@@ -174,6 +189,7 @@ margin-top:20px;
 
 
 
+
 th,td{
 
 padding:12px;
@@ -184,11 +200,28 @@ border-bottom:1px solid #334155;
 
 
 
+
+.filtro{
+
+width:90%;
+
+margin-top:5px;
+
+font-size:12px;
+
+}
+
+
+
+
+
 .hidden{
 
 display:none;
 
 }
+
+
 
 
 
@@ -210,6 +243,7 @@ justify-content:center;
 
 
 
+
 .modal-box{
 
 background:#1e293b;
@@ -218,33 +252,6 @@ padding:30px;
 
 border-radius:15px;
 
-width:400px;
-
-}
-
-.filtro{
-
-width:90%;
-
-margin-top:8px;
-
-font-size:12px;
-
-padding:7px;
-
-background:#020617;
-
-color:white;
-
-border:1px solid #475569;
-
-border-radius:6px;
-
-}
-
-
-th{
-
-vertical-align:top;
+width:450px;
 
 }
