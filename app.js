@@ -1,4 +1,4 @@
-let sped={
+const estado = {
 
 empresa:{},
 
@@ -12,27 +12,37 @@ participantes:[]
 
 
 
-function aba(nome){
+const $ = id => document.getElementById(id);
+
+
+
+document.querySelectorAll(".sidebar button")
+.forEach(btn=>{
+
+btn.onclick=()=>{
 
 
 document.querySelectorAll(".page")
-.forEach(x=>x.classList.add("hidden"));
+.forEach(p=>p.classList.add("hidden"));
 
 
-document.getElementById(nome)
+$(btn.dataset.page)
 .classList.remove("hidden");
 
 
-}
+};
+
+
+});
 
 
 
 
-function consultar(){
+
+$("btnAnalise").onclick=()=>{
 
 
-let file=
-document.getElementById("arquivo").files[0];
+const file=$("inputSped").files[0];
 
 
 if(!file){
@@ -45,171 +55,155 @@ return;
 
 
 
-let reader=new FileReader();
+const reader=new FileReader();
 
 
 
 reader.onload=e=>{
 
-lerSPED(e.target.result);
 
-mostrar();
+processarSPED(e.target.result);
+
+
+render();
+
 
 };
+
 
 
 reader.readAsText(file);
 
 
-
-}
-
-
-
-
-function lerSPED(txt){
-
-sped={
-
-empresa:{},
-
-notas:[],
-
-produtos:[],
-
-participantes:[],
-
-icms:0
-
 };
 
 
-txt.split(/\r?\n/).forEach(l=>{
 
 
-let c=l.split("|");
 
-let r=c[1];
 
 
+function numero(valor){
 
-if(!r) return;
 
-
-
-// EMPRESA
-if(r=="0000"){
-
-
-sped.empresa={
-
-razao:c[6],
-cnpj:c[7],
-inicio:c[4],
-fim:c[5]
-
-};
-
-
-}
-
-
-
-// PARTICIPANTES
-if(r=="0150"){
-
-
-sped.participantes.push({
-
-codigo:c[2],
-nome:c[3]
-
-});
-
-
-}
-
-
-
-// PRODUTOS
-if(r=="0200"){
-
-
-sped.produtos.push({
-
-codigo:c[2],
-descricao:c[3],
-ncm:c[8]
-
-});
-
-
-}
-
-
-
-// NOTAS C100
-
-if(r=="C100"){
-
-
-
-let valor =
-converterValor(c[12]);
-
-
-
-let icms =
-converterValor(c[22]);
-
-
-
-sped.notas.push({
-
-
-numero:c[8] || "",
-
-chave:c[9] || "",
-
-data:c[10] || "",
-
-valor:valor,
-
-icms:icms
-
-
-});
-
-
-
-sped.icms += icms;
-
-
-}
-
-
-
-});
-
-
-}
-
-
-
-
-function converterValor(valor){
-
-
-if(!valor) return 0;
+if(!valor)return 0;
 
 
 return Number(
-
-valor
-.replace(".","")
+valor.replace(/\./g,"")
 .replace(",",".")
 );
 
+}
+
+
+
+
+function processarSPED(texto){
+
+
+estado.empresa={};
+
+estado.notas=[];
+
+estado.produtos=[];
+
+estado.participantes=[];
+
+
+
+texto.split(/\r?\n/)
+
+.forEach(linha=>{
+
+
+const c=linha.split("|");
+
+
+const r=c[1];
+
+
+
+switch(r){
+
+
+
+case "0000":
+
+estado.empresa={
+
+razao:c[6]||"",
+
+cnpj:c[7]||""
+
+};
+
+break;
+
+
+
+
+case "0150":
+
+estado.participantes.push({
+
+nome:c[3]||""
+
+});
+
+break;
+
+
+
+
+
+case "0200":
+
+estado.produtos.push({
+
+codigo:c[2]||"",
+
+descricao:c[3]||"",
+
+ncm:c[8]||""
+
+});
+
+
+break;
+
+
+
+
+
+case "C100":
+
+
+estado.notas.push({
+
+numero:c[8]||"",
+
+serie:c[7]||"",
+
+data:c[10]||"",
+
+valor:numero(c[12]),
+
+chave:c[9]||""
+
+});
+
+
+break;
+
+
+
+}
+
+
+
+});
+
 
 }
 
@@ -217,145 +211,141 @@ valor
 
 
 
-function mostrar(){
+function render(){
 
 
 
-qtdNotas.innerHTML =
-sped.notas.length;
+$("status").innerHTML="SPED analisado com sucesso";
 
 
 
-qtdProdutos.innerHTML =
-sped.produtos.length;
+$("totalNotas").innerHTML=estado.notas.length;
+
+$("totalProdutos").innerHTML=estado.produtos.length;
+
+$("totalPart").innerHTML=estado.participantes.length;
 
 
 
-qtdPart.innerHTML =
-sped.participantes.length;
+let total=
+estado.notas.reduce((a,b)=>a+b.valor,0);
 
 
 
+$("valorTotal").innerHTML=
 
-let total =
-sped.notas.reduce(
-(a,b)=>a+b.valor,
-0
-);
-
-
-
-valorTotal.innerHTML =
-
-"R$ " +
-
-total.toLocaleString(
-"pt-BR",
-{
-minimumFractionDigits:2
-}
-);
+"R$ "+total.toLocaleString("pt-BR");
 
 
 
 
 
-dadosEmpresa.innerHTML=
+$("empresaDados").innerHTML=
 
 `
 
-<h3>${sped.empresa.razao || "Não encontrado"}</h3>
+<h3>${estado.empresa.razao}</h3>
 
-<p>
 CNPJ:
-${sped.empresa.cnpj || ""}
-</p>
-
-
-<p>
-Período:
-${sped.empresa.inicio || ""}
-até
-${sped.empresa.fim || ""}
-</p>
-
+${estado.empresa.cnpj}
 
 `;
 
 
 
 
+renderNotas();
 
-resumo.innerHTML=
+renderProdutos();
+
+
+
+$("resumo").innerHTML=
 
 `
 
-<b>Resumo Fiscal</b>
-
-<br><br>
-
-
-Notas:
-${sped.notas.length}
-
+Notas encontradas: ${estado.notas.length}
 
 <br>
 
-
-Valor total:
-R$ ${total.toLocaleString("pt-BR",
-{
-minimumFractionDigits:2
-})}
-
+Produtos encontrados: ${estado.produtos.length}
 
 <br>
 
-
-ICMS:
-R$ ${sped.icms.toLocaleString("pt-BR",
-{
-minimumFractionDigits:2
-})}
-
-
+Participantes: ${estado.participantes.length}
 
 `;
 
 
 
+}
 
 
-tabelaNotas.innerHTML="";
 
 
+function renderNotas(lista=estado.notas){
 
-sped.notas.forEach(n=>{
+
+$("listaNotas").innerHTML="";
 
 
-tabelaNotas.innerHTML+=`
+lista.forEach(n=>{
+
+
+$("listaNotas").innerHTML+=`
 
 <tr>
 
 <td>${n.numero}</td>
 
+<td>${n.serie}</td>
+
 <td>${n.data}</td>
 
-<td>
-R$ ${n.valor.toLocaleString("pt-BR",
-{
-minimumFractionDigits:2
-})}
-</td>
+<td>R$ ${n.valor}</td>
 
+<td>${n.chave}</td>
 
 <td>
 
-<button onclick='detalhe(${JSON.stringify(n)})'>
-Abrir
+<button onclick='abrirNota(${JSON.stringify(n)})'>
+Ver
 </button>
 
 </td>
+
+
+</tr>`;
+
+
+});
+
+
+}
+
+
+
+
+
+
+function renderProdutos(lista=estado.produtos){
+
+
+$("listaProdutos").innerHTML="";
+
+
+lista.forEach(p=>{
+
+
+$("listaProdutos").innerHTML+=`
+
+<tr>
+
+<td>${p.codigo}</td>
+
+<td>${p.descricao}</td>
+
+<td>${p.ncm}</td>
 
 </tr>
 
@@ -364,40 +354,48 @@ Abrir
 });
 
 
-
 }
 
 
 
 
 
-function auditar(){
+
+document.querySelectorAll("input")
+.forEach(input=>{
 
 
-erros.innerHTML=
-
-`
-
-<h3>✔ SPED processado</h3>
-
-<p>Nenhuma inconsistência encontrada automaticamente</p>
-
-`;
+input.onkeyup=()=>{
 
 
-}
+renderNotas(
+estado.notas.filter(n=>
+
+n.numero.includes($("fNum").value)
+
+)
+
+);
+
+
+};
+
+
+});
 
 
 
 
 
-function detalhe(n){
 
 
-modal.style.display="flex";
+function abrirNota(n){
 
 
-modalConteudo.innerHTML=
+$("modal").style.display="flex";
+
+
+$("modalTexto").innerHTML=
 
 `
 
@@ -405,13 +403,17 @@ NF: ${n.numero}
 
 <br>
 
-Data:
-${n.data}
+Data: ${n.data}
 
 <br>
 
 Valor:
 R$ ${n.valor}
+
+<br>
+
+Chave:
+${n.chave}
 
 `;
 
@@ -420,42 +422,8 @@ R$ ${n.valor}
 
 
 
-function fechar(){
+$("fecharModal").onclick=()=>{
 
-modal.style.display="none";
+$("modal").style.display="none";
 
-}
-
-
-
-
-function buscarNF(valor){
-
-
-let filtrado=
-sped.notas.filter(n=>
-n.numero.includes(valor));
-
-
-tabelaNotas.innerHTML="";
-
-
-filtrado.forEach(n=>{
-
-
-tabelaNotas.innerHTML+=`
-
-<tr>
-
-<td>${n.numero}</td>
-
-<td>${n.data}</td>
-
-<td>R$ ${n.valor}</td>
-
-</tr>`;
-
-});
-
-
-}
+};

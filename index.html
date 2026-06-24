@@ -4,9 +4,10 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
 
-<title>SPED Analyzer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SPED Analyzer Pro</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -16,30 +17,29 @@
 <body>
 
 
-<div class="layout">
+<div class="app">
 
 
-<aside>
+<aside class="sidebar">
 
-<h2>Analisa SPED</h2>
+<h1>⚡ SPED</h1>
+
+<p>Analyzer PRO</p>
 
 
-<nav>
+<button data-page="dashboard">Dashboard</button>
 
-<button onclick="aba('dashboard')">Dashboard</button>
+<button data-page="empresa">Empresa</button>
 
-<button onclick="aba('empresa')">Empresa</button>
+<button data-page="notas">Notas</button>
 
-<button onclick="aba('notas')">Notas</button>
+<button data-page="produtos">Produtos</button>
 
-<button onclick="aba('produtos')">Produtos</button>
-
-<button onclick="aba('auditoria')">Auditoria</button>
-
-</nav>
+<button data-page="auditoria">Auditoria</button>
 
 
 </aside>
+
 
 
 
@@ -49,26 +49,36 @@
 
 <header>
 
+<div>
 
-<h1>SPED Analyzer</h1>
+<h2>SPED Analyzer</h2>
+
+<span id="status">
+Nenhum arquivo carregado
+</span>
+
+</div>
 
 
 <div>
 
 <input 
 type="file"
-id="arquivo"
+id="inputSped"
 accept=".txt">
 
 
-<button onclick="consultar()">
-Consultar
+<button id="btnAnalise">
+Analisar SPED
 </button>
 
 </div>
 
 
 </header>
+
+
+
 
 
 
@@ -80,25 +90,25 @@ Consultar
 
 
 <div class="card">
-<h3>Notas</h3>
-<strong id="qtdNotas">0</strong>
+Notas
+<strong id="totalNotas">0</strong>
 </div>
 
 
 <div class="card">
-<h3>Produtos</h3>
-<strong id="qtdProdutos">0</strong>
+Produtos
+<strong id="totalProdutos">0</strong>
 </div>
 
 
 <div class="card">
-<h3>Participantes</h3>
-<strong id="qtdPart">0</strong>
+Participantes
+<strong id="totalPart">0</strong>
 </div>
 
 
 <div class="card">
-<h3>Total</h3>
+Valor
 <strong id="valorTotal">R$ 0</strong>
 </div>
 
@@ -107,18 +117,18 @@ Consultar
 
 
 
-<div class="panel">
+<div class="box">
 
-<h2>Resumo Fiscal</h2>
+<h3>Resumo Fiscal</h3>
 
-<div id="resumo">
-Nenhum SPED carregado
-</div>
+<div id="resumo"></div>
 
 </div>
 
 
 </section>
+
+
 
 
 
@@ -127,16 +137,18 @@ Nenhum SPED carregado
 <section id="empresa" class="page hidden">
 
 
-<div class="panel">
+<div class="box">
 
-<h2>Empresa</h2>
+<h3>Empresa</h3>
 
-<div id="dadosEmpresa"></div>
+<div id="empresaDados"></div>
 
 </div>
 
-
 </section>
+
+
+
 
 
 
@@ -145,35 +157,39 @@ Nenhum SPED carregado
 <section id="notas" class="page hidden">
 
 
-<div class="panel">
+<div class="box">
 
 
-<h2>Notas Fiscais</h2>
+<h3>Notas Fiscais</h3>
 
-
-<input 
-placeholder="Pesquisar NF"
-onkeyup="buscarNF(this.value)"
->
 
 
 <table>
+
 
 <thead>
 
 <tr>
 
-<th>Número</th>
-<th>Data</th>
-<th>Valor</th>
-<th></th>
+<th>Número<input id="fNum"></th>
+
+<th>Série<input id="fSerie"></th>
+
+<th>Data<input id="fData"></th>
+
+<th>Valor<input id="fValor"></th>
+
+<th>Chave<input id="fChave"></th>
+
+<th>Ação</th>
 
 </tr>
+
 
 </thead>
 
 
-<tbody id="tabelaNotas"></tbody>
+<tbody id="listaNotas"></tbody>
 
 
 </table>
@@ -183,6 +199,7 @@ onkeyup="buscarNF(this.value)"
 
 
 </section>
+
 
 
 
@@ -192,86 +209,31 @@ onkeyup="buscarNF(this.value)"
 <section id="produtos" class="page hidden">
 
 
-<div class="panel">
+<div class="box">
 
 
-<h2>Produtos</h2>
+<h3>Produtos</h3>
 
 
 <table>
+
 
 <thead>
 
 <tr>
 
-<th>
+<th>Código<input id="pCod"></th>
 
-Código
+<th>Descrição<input id="pDesc"></th>
 
-<br>
-
-<input
-class="filtro"
-placeholder="Filtrar"
-onkeyup="filtrarProdutos()"
-id="filtroCodigo">
-
-</th>
-
-
-
-<th>
-
-Descrição
-
-<br>
-
-<input
-class="filtro"
-placeholder="Filtrar"
-onkeyup="filtrarProdutos()"
-id="filtroDescricao">
-
-</th>
-
-
-
-<th>
-
-Unidade
-
-<br>
-
-<input
-class="filtro"
-placeholder="Filtrar"
-onkeyup="filtrarProdutos()"
-id="filtroUnidade">
-
-</th>
-
-
-
-<th>
-
-NCM
-
-<br>
-
-<input
-class="filtro"
-placeholder="Filtrar"
-onkeyup="filtrarProdutos()"
-id="filtroNcm">
-
-</th>
+<th>NCM<input id="pNcm"></th>
 
 </tr>
 
 </thead>
 
 
-<tbody id="tabelaProdutos"></tbody>
+<tbody id="listaProdutos"></tbody>
 
 
 </table>
@@ -287,24 +249,21 @@ id="filtroNcm">
 
 
 
+
 <section id="auditoria" class="page hidden">
 
 
-<div class="panel">
+<div class="box">
 
+<h3>Auditoria</h3>
 
-<h2>Auditoria</h2>
-
-<div id="erros">
-Nenhuma análise
-</div>
+<div id="auditoriaResultado"></div>
 
 
 </div>
 
 
 </section>
-
 
 
 
@@ -316,21 +275,20 @@ Nenhuma análise
 
 
 
+
 <div id="modal" class="modal">
 
 
-<div class="modal-box">
+<div class="modalBox">
 
 
-<h2>Detalhes NF</h2>
+<h2>Nota Fiscal</h2>
 
 
-<div id="modalConteudo"></div>
+<div id="modalTexto"></div>
 
 
-<br>
-
-<button onclick="fechar()">
+<button id="fecharModal">
 Fechar
 </button>
 

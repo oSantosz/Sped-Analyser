@@ -7,16 +7,16 @@ body{
 
 margin:0;
 
-font-family:Segoe UI,Arial;
+font-family:Inter,Segoe UI;
 
-background:#0f172a;
+background:#0b1220;
 
 color:white;
 
 }
 
 
-.layout{
+.app{
 
 display:flex;
 
@@ -26,7 +26,7 @@ height:100vh;
 
 
 
-aside{
+.sidebar{
 
 width:240px;
 
@@ -38,15 +38,7 @@ padding:25px;
 
 
 
-aside h2{
-
-color:#38bdf8;
-
-}
-
-
-
-nav button{
+.sidebar button{
 
 width:100%;
 
@@ -54,11 +46,11 @@ padding:14px;
 
 margin:8px 0;
 
+background:#1e293b;
+
 border:0;
 
 border-radius:10px;
-
-background:#1e293b;
 
 color:white;
 
@@ -110,22 +102,6 @@ cursor:pointer;
 
 
 
-input{
-
-padding:12px;
-
-background:#020617;
-
-color:white;
-
-border:1px solid #334155;
-
-border-radius:8px;
-
-}
-
-
-
 .cards{
 
 display:grid;
@@ -140,13 +116,13 @@ margin:25px 0;
 
 
 
-.card,.panel{
+.card,.box{
 
 background:#1e293b;
 
 padding:25px;
 
-border-radius:18px;
+border-radius:20px;
 
 }
 
@@ -154,7 +130,9 @@ border-radius:18px;
 
 .card strong{
 
-font-size:32px;
+display:block;
+
+font-size:35px;
 
 color:#38bdf8;
 
@@ -168,8 +146,6 @@ width:100%;
 
 border-collapse:collapse;
 
-margin-top:20px;
-
 }
 
 
@@ -179,6 +155,24 @@ th,td{
 padding:12px;
 
 border-bottom:1px solid #334155;
+
+}
+
+
+
+input{
+
+background:#020617;
+
+color:white;
+
+border:1px solid #334155;
+
+padding:8px;
+
+border-radius:6px;
+
+width:90%;
 
 }
 
@@ -200,7 +194,7 @@ position:fixed;
 
 inset:0;
 
-background:#0008;
+background:#0009;
 
 align-items:center;
 
@@ -210,15 +204,14 @@ justify-content:center;
 
 
 
-.modal-box{
+.modalBox{
 
 background:#1e293b;
 
 padding:30px;
 
-border-radius:15px;
+border-radius:20px;
 
-width:400px;
+width:450px;
 
 }
-
